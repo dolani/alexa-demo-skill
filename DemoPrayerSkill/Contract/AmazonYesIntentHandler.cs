@@ -17,20 +17,21 @@ namespace DemoPrayerSkill.Contract
     {
         public async Task<SkillResponse> HandleIntent(IntentRequest input, Session session, SkillRequest request)
         {
-            var user = request.Context.System.User;
-            if (user.Permissions == null)
-            {
-                String reminderText = "Please go to the Alexa mobile app to grant reminders permissions.";
-                Reprompt r = new Reprompt(reminderText);
-                return ResponseBuilder.TellWithAskForPermissionConsentCard(reminderText, new string[]{"alexa::alerts:reminders:skill:readwrite"}, session);   
-            }
             try
             {
+                var user = request.Context.System.User;
+                if (user.Permissions == null)
+                {
+                    String reminderText = "Please go to the Alexa mobile app to grant reminders permissions.";
+                    Reprompt r = new Reprompt(reminderText);
+                    return ResponseBuilder.TellWithAskForPermissionConsentCard(reminderText, new string[] { "alexa::alerts:reminders:skill:readwrite" }, session);
+                }
+
                 var reminder = new Reminder
                 {
                     RequestTime = DateTime.UtcNow,
                     Trigger = new RelativeTrigger(12 * 60 * 60),
-                    AlertInformation = new AlertInformation(new[] { new SpokenContent("it's a test", "en-GB") }),
+                    AlertInformation = new AlertInformation(new[] { new SpokenContent("It's a test", "en-US") }),
                     PushNotification = PushNotification.Enabled
                 };
                 var client = new RemindersClient(RemindersClient.ReminderDomain, request.Context.System.ApiAccessToken);
