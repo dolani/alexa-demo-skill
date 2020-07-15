@@ -34,6 +34,7 @@ namespace DemoPrayerSkill
             services.AddTransient<IArchivePrayerIntentHandler, ArchivePrayerIntentHandler>();
             services.AddTransient<IClearPrayerIntentHandler, ClearPrayerIntentHandler>();
             services.AddTransient<IPrayerIntentHandler, PrayerIntentHandler>();
+            services.AddTransient<IAmazonYesIntentHandler, AmazonYesIntentHandler>();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

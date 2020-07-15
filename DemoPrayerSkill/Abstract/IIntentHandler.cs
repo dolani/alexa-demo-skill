@@ -10,6 +10,6 @@ namespace DemoPrayerSkill.Abstract
 {
     public interface IIntentHandler
     {
-        Task<SkillResponse> HandleIntent(IntentRequest input, Session session);
+        Task<SkillResponse> HandleIntent(IntentRequest input, Session session, SkillRequest request);
     }
 }

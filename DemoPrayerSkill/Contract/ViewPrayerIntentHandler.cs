@@ -12,7 +12,7 @@ namespace DemoPrayerSkill.Contract
 {
     public class ViewPrayerIntentHandler : IViewPrayerIntentHandler
     {
-        public Task<SkillResponse> HandleIntent(IntentRequest input, Session session)
+        public Task<SkillResponse> HandleIntent(IntentRequest input, Session session, SkillRequest request = null)
         {
             var sessionAttr = session.Attributes["prayer_request"];
             var pry_msg = "";

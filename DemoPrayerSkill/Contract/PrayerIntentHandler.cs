@@ -11,7 +11,7 @@ namespace DemoPrayerSkill.Contract
 {
     public class PrayerIntentHandler : IPrayerIntentHandler
     {
-        public Task<SkillResponse> HandleIntent(IntentRequest input, Session session)
+        public Task<SkillResponse> HandleIntent(IntentRequest input, Session session, SkillRequest request = null)
         {
             throw new NotImplementedException();
         }

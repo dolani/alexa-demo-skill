@@ -22,51 +22,57 @@ namespace DemoPrayerSkill.Controllers
         private readonly ISavePrayerIntentHandler _savePrayerIntentHandler;
         private readonly ILaunchRequestHandler _launchRequest;
         private readonly IArchivePrayerIntentHandler _archivePrayerIntentHandler;
+        private readonly IAmazonYesIntentHandler _amazonYesIntentHandler;
+
         readonly ILogger<AlexaController> _log;
-        public AlexaController(IClearPrayerIntentHandler clearPrayerIntentHandler, IAddPrayerIntentHandler addPrayerIntentHandler, IViewPrayerIntentHandler viewPrayerIntentHandler, ISavePrayerIntentHandler savePrayerIntentHandler, ILaunchRequestHandler launchRequest, IArchivePrayerIntentHandler archivePrayerIntentHandler, ILogger<AlexaController> log)
+        public AlexaController(IAmazonYesIntentHandler amazonYesIntentHandler, IClearPrayerIntentHandler clearPrayerIntentHandler, IAddPrayerIntentHandler addPrayerIntentHandler, IViewPrayerIntentHandler viewPrayerIntentHandler, ISavePrayerIntentHandler savePrayerIntentHandler, ILaunchRequestHandler launchRequest, IArchivePrayerIntentHandler archivePrayerIntentHandler, ILogger<AlexaController> log)
         {
             _addPrayerIntentHandler = addPrayerIntentHandler;
             _clearPrayerIntentHandler = clearPrayerIntentHandler;
             _viewPrayerIntentHandler = viewPrayerIntentHandler;
             _savePrayerIntentHandler = savePrayerIntentHandler;
+            _amazonYesIntentHandler = amazonYesIntentHandler;
             _launchRequest = launchRequest;
             _archivePrayerIntentHandler = archivePrayerIntentHandler;
             _log = log;
         }
 
         [HttpPost]
-        public SkillResponse bestil([FromBody]SkillRequest input)
+        public SkillResponse bestil([FromBody]SkillRequest request)
         {
 
-            Session session = input.Session;
+            Session session = request.Session;
             if (session.Attributes == null)
                 session.Attributes = new Dictionary<string, object>();
 
             SkillResponse response = ResponseBuilder.Empty();
             _log.LogInformation("Hello, world!");
-            if (input.GetRequestType() == typeof(LaunchRequest))
+            if (request.GetRequestType() == typeof(LaunchRequest))
             {
                 response = _launchRequest.Launch(session).Result;
             }
-            else if (input.GetRequestType() == typeof(IntentRequest))
+            else if (request.GetRequestType() == typeof(IntentRequest))
             {
-                var intentRequest = (IntentRequest)input.Request;
+                var intentRequest = (IntentRequest)request.Request;
                 switch (intentRequest.Intent.Name)
                 {
                     case "AddPrayerIntent":
-                        response = _addPrayerIntentHandler.HandleIntent(intentRequest, session).Result;
+                        response = _addPrayerIntentHandler.HandleIntent(intentRequest, session, request).Result;
                         break;
                     case "ClearPrayerIntent":
-                        response = _clearPrayerIntentHandler.HandleIntent(intentRequest, session).Result;
+                        response = _clearPrayerIntentHandler.HandleIntent(intentRequest, session, request).Result;
+                        break;
+                    case "AMAZON.YesIntent":
+                        response = _amazonYesIntentHandler.HandleIntent(intentRequest, session, request).Result;
                         break;
                     case "SavePrayerIntent":
-                        response = _savePrayerIntentHandler.HandleIntent(intentRequest, session).Result;
+                        response = _savePrayerIntentHandler.HandleIntent(intentRequest, session, request).Result;
                         break;
                     case "ArchivePrayerIntent":
-                        response = _archivePrayerIntentHandler.HandleIntent(intentRequest, session).Result;
+                        response = _archivePrayerIntentHandler.HandleIntent(intentRequest, session, request).Result;
                         break;
                     case "ViewPrayerIntent":
-                        response = _viewPrayerIntentHandler.HandleIntent(intentRequest, session).Result;
+                        response = _viewPrayerIntentHandler.HandleIntent(intentRequest, session, request).Result;
                         break;
                 }
             }

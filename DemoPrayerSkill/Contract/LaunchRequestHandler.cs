@@ -13,7 +13,7 @@ namespace DemoPrayerSkill.Contract
     {
         public Task<SkillResponse> Launch(Session session)
         {
-            string msg = $"Welcome to the Be Still Demo. How would you like to start your demo?";
+            string msg = $"Welcome. Would you like a daily reminder at one p.m. to pickup an apple from the stand?";
             Reprompt rp = new Reprompt(msg);
             var response = ResponseBuilder.Ask(msg, rp, session);
             return Task.FromResult(response);

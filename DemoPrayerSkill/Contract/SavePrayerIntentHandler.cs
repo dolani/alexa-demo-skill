@@ -12,7 +12,7 @@ namespace DemoPrayerSkill.Contract
 {
     public class SavePrayerIntentHandler : ISavePrayerIntentHandler
     {
-        public Task<SkillResponse> HandleIntent(IntentRequest input, Session session)
+        public Task<SkillResponse> HandleIntent(IntentRequest input, Session session, SkillRequest request = null)
         {
             string itm = input.Intent.Slots["request"].Value;
             string msg = "";
