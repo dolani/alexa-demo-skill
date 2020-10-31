@@ -49,7 +49,7 @@ namespace DemoPrayerSkill
             {
                 app.UseHsts();
             }
-            loggerFactory.AddFile("Logs/myapp.txt");
+            loggerFactory.AddFile("Logs/myapp.log");
 
             app.UseHttpsRedirection();
             app.UseMvc();
