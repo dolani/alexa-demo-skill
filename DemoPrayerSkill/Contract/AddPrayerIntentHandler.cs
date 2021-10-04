@@ -15,20 +15,20 @@ namespace DemoPrayerSkill.Contract
         public Task<SkillResponse> HandleIntent(IntentRequest input, Session session, SkillRequest request = null)
         {
             string itm = input.Intent.Name;
-            string msg = "";
+            string msg = string.Empty;
             if (string.IsNullOrEmpty(itm))
             {
-                msg = "I didn't get that. Would you like to ask again.";
+                msg = "I didn't get that. Would you like to ask again?";
                 Reprompt er = new Reprompt(msg);
                 var resp = ResponseBuilder.Ask(msg, er, session);
                 return Task.FromResult(resp);
             }
+
             msg = $"What is your prayer request?";
             Reprompt rp = new Reprompt(msg);
             var response = ResponseBuilder.Ask(msg, rp, session);
 
-            // grab input and where to save it to : session??? 
-
+            // grab input and where to save it to : session???
             return Task.FromResult(response);
         }
     }
