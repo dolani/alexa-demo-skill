@@ -15,10 +15,10 @@ namespace DemoPrayerSkill.Contract
         public Task<SkillResponse> HandleIntent(IntentRequest input, Session session, SkillRequest request = null)
         {
             var sessionAttr = session.Attributes["prayer_request"];
-            var pry_msg = "";
+            string pry_msg = string.Empty;
             if (sessionAttr == null)
             {
-                pry_msg = "You have no active prayer point";
+                pry_msg = "You have no active prayer point.";
             }
             else
             {
@@ -26,7 +26,7 @@ namespace DemoPrayerSkill.Contract
             }
 
             Reprompt rp = new Reprompt(pry_msg);
-            var response = ResponseBuilder.Ask(pry_msg, rp, session);
+            SkillResponse response = ResponseBuilder.Ask(pry_msg, rp, session);
             return Task.FromResult(response);
         }
     }
