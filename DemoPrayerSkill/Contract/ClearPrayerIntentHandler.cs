@@ -18,7 +18,7 @@ namespace DemoPrayerSkill.Contract
             var pry_msg = "";
             if (sessionAttr == null)
             {
-                pry_msg = "You have no active prayer point to clear";
+                pry_msg = "You have no active prayer point to clear.";
             }
             else
             {

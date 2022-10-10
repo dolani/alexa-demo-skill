@@ -37,7 +37,7 @@ namespace DemoPrayerSkill.Contract
                 var client = new RemindersClient(RemindersClient.ReminderDomain, request.Context.System.ApiAccessToken);
                 // var alertList = await client.Get();
                 var alertDetail = await client.Create(reminder);
-                String speechText = "You successfully schedule a daily reminder at one p. m. to get an apple";
+                String speechText = "You have successfully schedule a daily reminder at one p. m. to get an apple.";
                 Reprompt rp = new Reprompt(speechText);
                 var response = ResponseBuilder.Ask(speechText, rp, session);
                 return response;

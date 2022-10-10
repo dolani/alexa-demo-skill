@@ -14,7 +14,7 @@ namespace DemoPrayerSkill.Contract
     {
         public Task<SkillResponse> HandleIntent(IntentRequest input, Session session, SkillRequest request = null)
         {
-            string msg = $"Archived successfully";
+            string msg = $"Archived successfully.";
             Reprompt rp = new Reprompt(msg);
             var response = ResponseBuilder.Ask(msg, rp, session);
             return Task.FromResult(response);

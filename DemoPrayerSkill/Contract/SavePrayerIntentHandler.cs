@@ -18,13 +18,13 @@ namespace DemoPrayerSkill.Contract
             string msg = "";
             if (string.IsNullOrEmpty(itm))
             {
-                msg = "I didn't get that. Would you like to ask again.";
+                msg = "I did not get that. Would you like to ask again?";
                 Reprompt er = new Reprompt(msg);
                 var resp = ResponseBuilder.Ask(msg, er, session);
                 return Task.FromResult(resp);
             }
             session.Attributes["prayer_request"] = itm;
-            msg = $"{itm} has been saved successfully";
+            msg = $"{itm} has been saved successfully.";
 
             Reprompt rp = new Reprompt(msg);
             var response = ResponseBuilder.Ask(msg, rp, session);
